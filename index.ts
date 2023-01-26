@@ -23,18 +23,19 @@
 // console.log(identity(idObj1));
 // console.log(identity(idObj2));
 
-class Identity<T> {
-    value: T;
+// class Identity<T> {
+//     value: T;
     
-    constructor(initialVal: T) {
-     this.value = initialVal;
-    }
+//     constructor(initialVal: T) {
+//      this.value = initialVal;
+//     }
 
-    getValue(): T {
-        return this.value;
-    }
-}
+//     getValue(): T {
+//         return this.value;
+//     }
+// }
 
-let myVal = new Identity<number>(5);
-let result: number = myVal.getValue();
-console.log(result);
+// let myVal = new Identity<number>(5);
+// let result: number = myVal.getValue();
+// console.log(result);
+
