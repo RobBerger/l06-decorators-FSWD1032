@@ -74,33 +74,34 @@
 // contact.getFullName();
 // contact.greetName('Howdy');
 
-function logger(target: any, key: PropertyKey) {
-    let value: any;
+// function logger(target: any, key: PropertyKey) {
+//     let value: any;
    
-    const getter = function() {
-        console.log(`Get called for ${String(key)}: ${value}`);
-        return value;
-      };
+//     const getter = function() {
+//         console.log(`Get called for ${String(key)}: ${value}`);
+//         return value;
+//       };
      
-    const setter = function(newVal: any) {
-        console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
-        value = newVal;
-    };
+//     const setter = function(newVal: any) {
+//         console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
+//         value = newVal;
+//     };
    
-    Object.defineProperty(target, key, {
-      get: getter,
-      set: setter,
-      enumerable: true,
-      configurable: true
-    });
-}
+//     Object.defineProperty(target, key, {
+//       get: getter,
+//       set: setter,
+//       enumerable: true,
+//       configurable: true
+//     });
+// }
 
-class Greeter {
-    @logger
-    greeting = 'Hello';
-}
+// class Greeter {
+//     @logger
+//     greeting = 'Hello';
+// }
 
-let greeter = new Greeter();
-console.log(`console.log("${greeter.greeting}")`);
-greeter.greeting = "Howdy!";
-console.log(`console.log("${greeter.greeting}")`);
+// let greeter = new Greeter();
+// console.log(`console.log("${greeter.greeting}")`);
+// greeter.greeting = "Howdy!";
+// console.log(`console.log("${greeter.greeting}")`);
+
