@@ -39,37 +39,58 @@
 // let result: number = myVal.getValue();
 // console.log(result);
 
-class Contact {
-    firstName: string;
-    lastName: string;
+// class Contact {
+//     firstName: string;
+//     lastName: string;
 
-    constructor(fname: string, lname: string) {
-        this.firstName = fname;
-        this.lastName = lname;
-    }
-    @wrapper
-    getFullName() {
-        return `Full Name: ${this.firstName} ${this.lastName}`;
-    }
-    @wrapper
-    greetName(greeting: string) {
-        console.log(`${greeting} ${this.firstName}`);
-    }
-}
+//     constructor(fname: string, lname: string) {
+//         this.firstName = fname;
+//         this.lastName = lname;
+//     }
+//     @wrapper
+//     getFullName() {
+//         return `Full Name: ${this.firstName} ${this.lastName}`;
+//     }
+//     @wrapper
+//     greetName(greeting: string) {
+//         console.log(`${greeting} ${this.firstName}`);
+//     }
+// }
 
-function wrapper(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor.value;
+// function wrapper(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
+//     const originalMethod = descriptor.value;
 
-    descriptor.value = function (...args: any) {
-        console.log(`Calling ${propertyKey}() with`, args);
-        const result = originalMethod.apply(this, args);
-        console.log(`${propertyKey}() finished and returned ${result}`);
-        return result;
+//     descriptor.value = function (...args: any) {
+//         console.log(`Calling ${propertyKey}() with`, args);
+//         const result = originalMethod.apply(this, args);
+//         console.log(`${propertyKey}() finished and returned ${result}`);
+//         return result;
+//     };
+
+//     return descriptor;
+// }
+
+// let contact = new Contact('Bob', 'Bobertson');
+// contact.getFullName();
+// contact.greetName('Howdy');
+
+function logger(target: any, key: PropertyKey) {
+    let value: any;
+   
+    const getter = function() {
+        console.log(`Get called for ${String(key)}: ${value}`);
+        return value;
+      };
+     
+    const setter = function(newVal: any) {
+        console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
+        value = newVal;
     };
-
-    return descriptor;
+   
+    Object.defineProperty(target, key, {
+      get: getter,
+      set: setter,
+      enumerable: true,
+      configurable: true
+    });
 }
-
-let contact = new Contact('Bob', 'Bobertson');
-contact.getFullName();
-contact.greetName('Howdy');
