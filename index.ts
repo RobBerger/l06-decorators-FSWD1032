@@ -105,3 +105,24 @@
 // greeter.greeting = "Howdy!";
 // console.log(`console.log("${greeter.greeting}")`);
 
+function first() {
+    console.log("first(): decorator applied");
+    // return a decorator function
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        console.log("first(): decorator called");
+    };
+}
+
+function second() {
+    console.log("second(): decorator applied");
+    // return a decorator function
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        console.log("second(): decorator called");
+    };
+}
+
+class MyClass {
+    @first()
+    @second()
+    exampleMethod() {}
+}
