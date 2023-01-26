@@ -94,3 +94,13 @@ function logger(target: any, key: PropertyKey) {
       configurable: true
     });
 }
+
+class Greeter {
+    @logger
+    greeting = 'Hello';
+}
+
+let greeter = new Greeter();
+console.log(`console.log("${greeter.greeting}")`);
+greeter.greeting = "Howdy!";
+console.log(`console.log("${greeter.greeting}")`);

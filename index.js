@@ -37,34 +37,61 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // let myVal = new Identity<number>(5);
 // let result: number = myVal.getValue();
 // console.log(result);
-class Contact {
-    constructor(fname, lname) {
-        this.firstName = fname;
-        this.lastName = lname;
-    }
-    getFullName() {
-        return `Full Name: ${this.firstName} ${this.lastName}`;
-    }
-    greetName(greeting) {
-        console.log(`${greeting} ${this.firstName}`);
-    }
-}
-__decorate([
-    wrapper
-], Contact.prototype, "getFullName", null);
-__decorate([
-    wrapper
-], Contact.prototype, "greetName", null);
-function wrapper(target, propertyKey, descriptor) {
-    const originalMethod = descriptor.value;
-    descriptor.value = function (...args) {
-        console.log(`Calling ${propertyKey}() with`, args);
-        const result = originalMethod.apply(this, args);
-        console.log(`${propertyKey}() finished and returned ${result}`);
-        return result;
+// class Contact {
+//     firstName: string;
+//     lastName: string;
+//     constructor(fname: string, lname: string) {
+//         this.firstName = fname;
+//         this.lastName = lname;
+//     }
+//     @wrapper
+//     getFullName() {
+//         return `Full Name: ${this.firstName} ${this.lastName}`;
+//     }
+//     @wrapper
+//     greetName(greeting: string) {
+//         console.log(`${greeting} ${this.firstName}`);
+//     }
+// }
+// function wrapper(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
+//     const originalMethod = descriptor.value;
+//     descriptor.value = function (...args: any) {
+//         console.log(`Calling ${propertyKey}() with`, args);
+//         const result = originalMethod.apply(this, args);
+//         console.log(`${propertyKey}() finished and returned ${result}`);
+//         return result;
+//     };
+//     return descriptor;
+// }
+// let contact = new Contact('Bob', 'Bobertson');
+// contact.getFullName();
+// contact.greetName('Howdy');
+function logger(target, key) {
+    let value;
+    const getter = function () {
+        console.log(`Get called for ${String(key)}: ${value}`);
+        return value;
     };
-    return descriptor;
+    const setter = function (newVal) {
+        console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
+        value = newVal;
+    };
+    Object.defineProperty(target, key, {
+        get: getter,
+        set: setter,
+        enumerable: true,
+        configurable: true
+    });
 }
-let contact = new Contact('Bob', 'Bobertson');
-contact.getFullName();
-contact.greetName('Howdy');
+class Greeter {
+    constructor() {
+        this.greeting = 'Hello';
+    }
+}
+__decorate([
+    logger
+], Greeter.prototype, "greeting", void 0);
+let greeter = new Greeter();
+console.log(`console.log("${greeter.greeting}")`);
+greeter.greeting = "Howdy!";
+console.log(`console.log("${greeter.greeting}")`);
