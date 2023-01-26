@@ -66,32 +66,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // let contact = new Contact('Bob', 'Bobertson');
 // contact.getFullName();
 // contact.greetName('Howdy');
-function logger(target, key) {
-    let value;
-    const getter = function () {
-        console.log(`Get called for ${String(key)}: ${value}`);
-        return value;
+// function logger(target: any, key: PropertyKey) {
+//     let value: any;
+//     const getter = function() {
+//         console.log(`Get called for ${String(key)}: ${value}`);
+//         return value;
+//       };
+//     const setter = function(newVal: any) {
+//         console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
+//         value = newVal;
+//     };
+//     Object.defineProperty(target, key, {
+//       get: getter,
+//       set: setter,
+//       enumerable: true,
+//       configurable: true
+//     });
+// }
+// class Greeter {
+//     @logger
+//     greeting = 'Hello';
+// }
+// let greeter = new Greeter();
+// console.log(`console.log("${greeter.greeting}")`);
+// greeter.greeting = "Howdy!";
+// console.log(`console.log("${greeter.greeting}")`);
+function first() {
+    console.log("first(): decorator applied");
+    // return a decorator function
+    return function (target, propertyKey, descriptor) {
+        console.log("first(): decorator called");
     };
-    const setter = function (newVal) {
-        console.log(`Set called for ${String(key)}: Old Value: ${value} => New Value: ${newVal}`);
-        value = newVal;
-    };
-    Object.defineProperty(target, key, {
-        get: getter,
-        set: setter,
-        enumerable: true,
-        configurable: true
-    });
 }
-class Greeter {
-    constructor() {
-        this.greeting = 'Hello';
-    }
+function second() {
+    console.log("second(): decorator applied");
+    // return a decorator function
+    return function (target, propertyKey, descriptor) {
+        console.log("second(): decorator called");
+    };
+}
+class MyClass {
+    exampleMethod() { }
 }
 __decorate([
-    logger
-], Greeter.prototype, "greeting", void 0);
-let greeter = new Greeter();
-console.log(`console.log("${greeter.greeting}")`);
-greeter.greeting = "Howdy!";
-console.log(`console.log("${greeter.greeting}")`);
+    first(),
+    second()
+], MyClass.prototype, "exampleMethod", null);
