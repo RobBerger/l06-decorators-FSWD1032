@@ -39,3 +39,37 @@
 // let result: number = myVal.getValue();
 // console.log(result);
 
+class Contact {
+    firstName: string;
+    lastName: string;
+
+    constructor(fname: string, lname: string) {
+        this.firstName = fname;
+        this.lastName = lname;
+    }
+    @wrapper
+    getFullName() {
+        return `Full Name: ${this.firstName} ${this.lastName}`;
+    }
+    @wrapper
+    greetName(greeting: string) {
+        console.log(`${greeting} ${this.firstName}`);
+    }
+}
+
+function wrapper(target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = function (...args: any) {
+        console.log(`Calling ${propertyKey}() with`, args);
+        const result = originalMethod.apply(this, args);
+        console.log(`${propertyKey}() finished and returned ${result}`);
+        return result;
+    };
+
+    return descriptor;
+}
+
+let contact = new Contact('Bob', 'Bobertson');
+contact.getFullName();
+contact.greetName('Howdy');
